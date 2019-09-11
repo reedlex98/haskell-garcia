@@ -56,3 +56,19 @@ module Aula3 where
     elimVogal (x:xs)
         | elem x "aeiouAEIOU" = elimVogal xs
         | otherwise = x : elimVogal xs
+
+    -- TESTE DE MESA
+    -- Ida (empilhamento)
+    -- elimVogal "FATEC" = "F" : elimVogal "ATEC"
+    -- elimVogal "ATEC" = elimVogal "TEC"
+    -- elimVogal "TEC" = "T" : elimVogal "EC"
+    -- elimVogal "EC" = elimVogal "C"
+    -- elimVogal "C" = "C" : []
+    -- elimVogal [] = []
+
+    -- Volta (desempilhamento)
+    -- elimVogal "C" = "C" : []
+    -- elimVogal "EC" = ["C"]
+    -- elimVogal "TEC" = "T" : ["C"]
+    -- elimVogal "ATEC" = ["TC"]
+    -- elimVogal "FATEC" = "F" : ["TC"] = ["FTC"]
