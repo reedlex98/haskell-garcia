@@ -52,12 +52,12 @@ module Aula3 where
     -- PATTERN MATCHING APLICADO A LIST
 
     elimVogal :: String -> String
-    elimVogal [] = []
+    elimVogal [] = []-- PARTE 03
     elimVogal (x:xs)
         | elem x "aeiouAEIOU" = elimVogal xs
         | otherwise = x : elimVogal xs
 
-    -- TESTE DE MESA
+    -- TESTE DE MESA (EQUATIONAL REASONING)
     -- Ida (empilhamento)
     -- elimVogal "FATEC" = "F" : elimVogal "ATEC"
     -- elimVogal "ATEC" = elimVogal "TEC"
@@ -72,3 +72,31 @@ module Aula3 where
     -- elimVogal "TEC" = "T" : ["C"]
     -- elimVogal "ATEC" = ["TC"]
     -- elimVogal "FATEC" = "F" : ["TC"] = ["FTC"]
+
+    -- FIM DA PARTE 02
+
+    -- PARTE 03
+
+    -- LAMBDA: FUNCAO S/ CORPO (DECLARACAO INICIA POR BARRA)
+    -- SINTAXE : \p1 p2 ... pn -> EXPRESSAO
+
+    -- EXEMPLO 01 - SOMA
+    -- (\x y -> x + y) 10 7
+
+    -- HIGH ORDER FUNCTION: SAO FUNCOES QUE RECEBEM FUNCOES E/OU RETORNAM FUNCOES
+
+    -- EXEMPLO 
+    
+    foo :: (Int -> Int) -> Int
+    foo f = 1 + f 5 -- 1 -> Constante, f -> funcao, 5 -> parametro de f
+
+    oof :: Int -> (Int -> Int)
+    oof x = \y -> x+y
+
+    -- CURRYING : EH O ATO DE SE PASSAR MENOS ARGUMENTOS QUE O PEDIDO PARA UM FUNCAO. A FUNCAO SEM OS ARGUMENTOS RESTANTE SE TORNA UMA HIGH ORDER FUNCTION
+
+    -- EXEMPLO 
+
+    -- let s = (\x y z -> x + y + z)
+
+    -- FIM DA PARTE 03
