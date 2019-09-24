@@ -11,7 +11,7 @@ module Projeto where
     verSalario (Pessoa Gerente _) = 10807.20
 
     verFolha :: Pessoa -> String
-    verFolha p = "{nome: \"" ++ (nome p) ++ "\", cargo: \"" ++ show (cargo p) ++ "\", salario: " ++ show (verSalario p) ++ "}"
+    verFolha p = "{nome: \"" ++ nome p ++ "\", cargo: \"" ++ show (cargo p) ++ "\", salario: " ++ show (verSalario p) ++ "}"
 
     promover :: Pessoa -> Pessoa
     promover (Pessoa Estagiario n) = Pessoa Programador n
