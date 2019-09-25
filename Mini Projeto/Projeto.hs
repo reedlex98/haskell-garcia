@@ -1,5 +1,8 @@
 module Projeto where
 
+    (|>) :: a -> (a -> b) -> b
+    (|>) x f = f x
+
     data Cargo = Estagiario | Programador | Coordenador | Gerente deriving Show
 
     data Pessoa = Pessoa {cargo :: Cargo, nome :: String} deriving Show
@@ -18,3 +21,17 @@ module Projeto where
     promover (Pessoa Programador n) = Pessoa Coordenador n
     promover (Pessoa Coordenador n) = Pessoa Gerente n
     promover (Pessoa _ n) = Pessoa Gerente n
+
+    contratarInicial :: String -> Pessoa
+    contratarInicial = Pessoa Estagiario
+
+    mediaSalarial :: [Pessoa] -> Double
+    mediaSalarial ps = foldl calculo 0 ps / fromIntegral (length ps)
+        where
+            calculo salario pessoa = salario + verSalario pessoa
+    
+    contratarVariosEstag :: [String] -> [Pessoa]
+    contratarVariosEstag = map contratarInicial
+
+    rotinaPromocao :: Pessoa -> String
+    rotinaPromocao p = p |> promover |> verFolha
