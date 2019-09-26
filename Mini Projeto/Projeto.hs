@@ -1,37 +1,89 @@
 module Projeto where
 
-    (|>) :: a -> (a -> b) -> b
-    (|>) x f = f x
+import           Data.Monoid
 
-    data Cargo = Estagiario | Programador | Coordenador | Gerente deriving Show
+(|>) :: a -> (a -> b) -> b
+(|>) x f = f x
 
-    data Pessoa = Pessoa {cargo :: Cargo, nome :: String} deriving Show
+data Projeto =
+  Projeto
+    { nomeProjeto :: String
+    , budget      :: Double
+    , envolvidos  :: [Int]
+    }
+  deriving (Show)
 
-    verSalario :: Pessoa -> Double
-    verSalario (Pessoa Estagiario _) = 1500
-    verSalario (Pessoa Programador _) = 5750.15
-    verSalario (Pessoa Coordenador _) = 8000
-    verSalario (Pessoa Gerente _) = 10807.20
+class ToJSON a where
+  toJSON :: a -> String
 
-    verFolha :: Pessoa -> String
-    verFolha p = "{nome: \"" ++ nome p ++ "\", cargo: \"" ++ show (cargo p) ++ "\", salario: " ++ show (verSalario p) ++ "}"
+instance ToJSON Pessoa where
+  toJSON p =
+    "{nome: \"" ++
+    nome p ++
+    "\", cargo: \"" ++
+    show (cargo p) ++ "\", salario: " ++ show (verSalario p) ++ "}"
 
-    promover :: Pessoa -> Pessoa
-    promover (Pessoa Estagiario n) = Pessoa Programador n
-    promover (Pessoa Programador n) = Pessoa Coordenador n
-    promover (Pessoa Coordenador n) = Pessoa Gerente n
-    promover (Pessoa _ n) = Pessoa Gerente n
+instance ToJSON Projeto where
+  toJSON p =
+    "{nome: \"" ++
+    nomeProjeto p ++
+    "\", orcamento: \"" ++
+    show (budget p) ++ "\", envolvidos: " ++ show (envolvidos p) ++ "}"
 
-    contratarInicial :: String -> Pessoa
-    contratarInicial = Pessoa Estagiario
+instance Semigroup Projeto where
+  (Projeto nome1 budget1 env1) <> (Projeto nome2 budget2 env2) =
+    Projeto (nome1 ++ ", " ++ nome2) (budget1 + budget2) (env1 ++ env2)
 
-    mediaSalarial :: [Pessoa] -> Double
-    mediaSalarial ps = foldl calculo 0 ps / fromIntegral (length ps)
-        where
-            calculo salario pessoa = salario + verSalario pessoa
-    
-    contratarVariosEstag :: [String] -> [Pessoa]
-    contratarVariosEstag = map contratarInicial
+-- instance Monoid Projeto where
+--   mempty = Projeto "" 0 []
+--   mappend (Projeto nome1 budget1 env1) (Projeto nome2 budget2 env2) =
+--     Projeto (nome1 ++ ", " ++ nome2) (budget1 + budget2) (env1 ++ env2)
+instance Monoid Projeto where
+  mempty = Projeto "" 0 []
 
-    rotinaPromocao :: Pessoa -> String
-    rotinaPromocao p = p |> promover |> verFolha
+data Cargo
+  = Estagiario
+  | Programador
+  | Coordenador
+  | Gerente
+  deriving (Show)
+
+data Pessoa =
+  Pessoa
+    { cargo :: Cargo
+    , nome  :: String
+    }
+  deriving (Show)
+
+verSalario :: Pessoa -> Double
+verSalario (Pessoa Estagiario _)  = 1500
+verSalario (Pessoa Programador _) = 5750.15
+verSalario (Pessoa Coordenador _) = 8000
+verSalario (Pessoa Gerente _)     = 10807.20
+
+verFolha :: Pessoa -> String
+verFolha p =
+  "{nome: \"" ++
+  nome p ++
+  "\", cargo: \"" ++
+  show (cargo p) ++ "\", salario: " ++ show (verSalario p) ++ "}"
+
+promover :: Pessoa -> Pessoa
+promover (Pessoa Estagiario n)  = Pessoa Programador n
+promover (Pessoa Programador n) = Pessoa Coordenador n
+promover (Pessoa Coordenador n) = Pessoa Gerente n
+promover (Pessoa _ n)           = Pessoa Gerente n
+
+contratarInicial :: String -> Pessoa
+contratarInicial = Pessoa Estagiario
+
+mediaSalarial :: [Pessoa] -> Double
+mediaSalarial ps = foldl calculo 0 ps / fromIntegral (length ps)
+  where
+    calculo salario pessoa = salario + verSalario pessoa
+
+contratarVariosEstag :: [String] -> [Pessoa]
+contratarVariosEstag = map contratarInicial
+
+rotinaPromocao :: Pessoa -> String
+rotinaPromocao p = p |> promover |> verFolha
