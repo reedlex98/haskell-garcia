@@ -1,4 +1,4 @@
-module Primeiro where
+module PrimeiroESegundo where
 
 import           Data.Monoid
 
@@ -33,3 +33,8 @@ instance Monoid Produto where
 somaProduto :: [Produto] -> Produto
 somaProduto =
   foldl (\pt pd -> Produto (valor pt + valor pd) Total) (Produto 0 Total)
+
+-- Ex 02
+
+totalGeral :: [Produto] -> Double
+totalGeral p = valor (mconcat p) 
