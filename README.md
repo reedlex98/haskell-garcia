@@ -4,7 +4,7 @@
 
 Aulas de Haskell do Garcia + exercícios do livro [Haskell Uma Introducao a Programacao Funcional](https://www.casadocodigo.com.br/products/livro-haskell) + Mini Projeto RH de uma empresa
 
-## Conteúdo a serem vistos
+## Conteúdos a serem estudados
 
 1. ~~Programação funcional~~
 2. ~~Primeiros exemplos~~
