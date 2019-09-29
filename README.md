@@ -1,4 +1,4 @@
-# Curso de Introdução ao Haskell
+# Curso de Introdução a Programação Funcional (Haskell)
 
 ![haskell-image](https://computingstories.com/img/2017-01-24/haskell-impressions/haskell-logo.png)
 
