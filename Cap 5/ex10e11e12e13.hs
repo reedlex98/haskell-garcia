@@ -1,4 +1,4 @@
-module DezEOnzeEDoze where
+module DezEOnzeEDozeETreze where
 -- Ex 10
 data Arvore a
   = Nulo
@@ -83,3 +83,38 @@ preOrdem Nulo = []
 -- preOrdem Branch 15 (Branch 11 (Leaf 6) (Branch 12 (Leaf 10) Nulo)) (Branch 20 Nulo (Branch 22 (Leaf 21) Nulo)) = [15] ++ [11, 6, 12, 10] ++ [20,22,21]
 
 -- [15, 11, 6, 12, 10, 20, 22, 21]
+
+-- Ex 12
+
+inserir :: Ord a => a -> Arvore a -> Arvore a
+inserir a Nulo = Branch a Nulo Nulo
+inserir a (Branch c Nulo Nulo)
+  | a > c = Branch c Nulo (Leaf a) 
+  | a < c = Branch c (Leaf a) Nulo 
+  | otherwise = Branch c Nulo Nulo
+inserir a (Leaf x)
+  | a < x = Branch x (Leaf a) Nulo
+  | a > x = Branch x Nulo (Leaf a)
+  | otherwise = Leaf x
+inserir a (Branch c l Nulo)
+  | a > c = Branch c l (Leaf a)
+  | a < c = Branch c (inserir a l) Nulo
+  | otherwise = Branch c l Nulo
+inserir a (Branch c Nulo r)
+  | a > c = Branch c Nulo (inserir a r)
+  | a < c = Branch c (Leaf a) r
+  | otherwise = Branch c Nulo r
+inserir a (Branch c l r)
+  | a > c = Branch c l (inserir a r)
+  | a < c = Branch c (inserir a l) r
+  | otherwise = Branch c l r
+
+-- Ex 13
+
+inserirMultiplos :: Ord a => [a] -> Arvore a -> Arvore a
+inserirMultiplos (x:xs) a = inserirMultiplos xs (inserir x a)
+inserirMultiplos [] a = a
+
+-- Hlint Suggestion: Use foldl. Replace with: inserirMultiplos xs a = foldl (flip inserir) a xs
+inserirMultiplos2 :: Ord a => [a] -> Arvore a -> Arvore a
+inserirMultiplos2 xs a = foldl (flip inserir) a xs
