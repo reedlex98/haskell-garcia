@@ -2,6 +2,8 @@ module Projeto where
 
 import           Data.Monoid
 
+data Indice a = Indice {indice :: Int, dados :: a}
+
 (|>) :: a -> (a -> b) -> b
 (|>) x f = f x
 
@@ -87,3 +89,6 @@ contratarVariosEstag = map contratarInicial
 
 rotinaPromocao :: Pessoa -> String
 rotinaPromocao p = p |> promover |> verFolha
+
+instance Functor Indice where
+  fmap f (Indice i dados) = Indice i (f dados)

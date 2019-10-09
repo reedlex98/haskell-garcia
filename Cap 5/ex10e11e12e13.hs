@@ -111,9 +111,9 @@ inserir a (Branch c l r)
 
 -- Ex 13
 
-inserirMultiplos :: Ord a => [a] -> Arvore a -> Arvore a
-inserirMultiplos (x:xs) a = inserirMultiplos xs (inserir x a)
-inserirMultiplos [] a = a
+-- inserirMultiplos :: Ord a => [a] -> Arvore a -> Arvore a
+-- inserirMultiplos (x:xs) a = inserirMultiplos xs (inserir x a)
+-- inserirMultiplos [] a = a
 
 -- Hlint Suggestion: Use foldl. Replace with: inserirMultiplos xs a = foldl (flip inserir) a xs
 inserirMultiplos2 :: Ord a => [a] -> Arvore a -> Arvore a
