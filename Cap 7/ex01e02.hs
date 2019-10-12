@@ -16,5 +16,6 @@ instance Functor Coisa where
 instance Applicative Coisa where
   pure = UmaCoisa
   (UmaCoisa f) <*> (UmaCoisa x) = UmaCoisa (f x)
+  (UmaCoisa f) <*> (DuasCoisas x y) = DuasCoisas (f x) (f y)
   (DuasCoisas f g) <*> (DuasCoisas x y) = DuasCoisas (f x) (g y)
 

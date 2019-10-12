@@ -20,3 +20,17 @@ mapa2 f Nulo = Nulo
 
 somaCinco :: Int -> Int
 somaCinco x = x + 5
+
+
+
+-- instance Applicative Arvore where
+--   pure = Leaf
+--   (<*>) (Leaf f) (Leaf x) = Leaf (f x)
+--   (<*>) (Leaf f) Nulo = Leaf f
+--   (<*>) (Leaf f) (Branch c l r) = Branch (f c) (fmap f l) (fmap f r)
+--   (<*>) Nulo Nulo = Nulo
+--   (<*>) Nulo (Leaf f) = Leaf f
+--   (<*>) Nulo (Branch x y z) = Branch x y z
+--   (<*>) (Branch x y z) (Branch c l r) = Branch (x c) ( (<*>) y l) ((<*>) z r)
+--   (<*>) (Branch x y z) Leaf c = Leaf (x c)
+--   (<*>) (Branch x y z) Nulo = Branch x y z
