@@ -9,6 +9,8 @@ module AulaOito where
     -- Satisfazendo:
         -- a) RETURN EH O ELEMENTO NEUTRO
         -- b) ASSOCIATIVIDADE: fmap join . join = join . join
+    
+    -- UMA MONADA EH APENAS UM MONOIDE NA CATEGORIA DOS (ENDO)FUNTORES;
 
     class Monoid m where
         mempty :: m
