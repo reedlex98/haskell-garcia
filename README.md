@@ -13,5 +13,5 @@ Aulas de Haskell do Garcia + exercícios do livro [Haskell Uma Introducao a Prog
 5. ~~Polimorfismo paramétrico~~
 6. ~~Teoria das categorias~~
 7. ~~Funtores~~
-8. Mônadas
+8. ~~Mônadas~~
 9. Mônadas IO
