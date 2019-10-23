@@ -2,11 +2,11 @@ module Main where
     import Control.Monad
     import System.Random
 
-    data Naipe = Ouros | Espadas | Copas | Paus deriving (Show, Enum)
+    data Naipe = Ouros | Espadas | Copas | Paus deriving (Show, Enum, Read, Eq)
     
-    data Valor = Dois | Tres | Quatro | Cinco | Seis | Sete | Oito | Nove | Dez | J | Q | K | A deriving (Show, Enum)
+    data Valor = Dois | Tres | Quatro | Cinco | Seis | Sete | Oito | Nove | Dez | J | Q | K | A deriving (Show, Enum, Read, Eq)
 
-    data Carta = Carta {valor :: Valor, naipe :: Naipe} deriving (Show)
+    data Carta = Carta {valor :: Valor, naipe :: Naipe} deriving (Show, Read, Eq)
 
     -- main :: IO ()
     -- main = do
@@ -21,13 +21,15 @@ module Main where
     --     putStrLn $ acertou $ carta == palpite
 
     main :: IO ()
-    main = do
+    main = do 
         let acertou True = "Voce acertou"
-            acertou False = "Voce errou..."
-        let baralho = return [Carta x y | x <- [Dois .. A], y <- [Ouros .. Paus]]
+            acertou False = "Errou..."
+        let baralho = [Carta x y | x <- [Dois .. A], y <- [Ouros .. Paus]]
         cartaNum <- randomRIO (1, length baralho)
-        let carta = return $ baralho !! cartaNum
-        putStrLn "Escreva a carta para adivinhar: "
+        let carta = baralho !! cartaNum
+        putStrLn "Escreva a carta para advinhar: "
         palpite <- readLn
-        putStrLn ("Sua carta foi " ++ show (valor carta) ++ " de " ++ show (naipe carta))
+        putStrLn $
+            "Sua carta foi " ++
+                show (valor carta) ++ " de " ++ show (naipe carta)
         putStrLn $ acertou $ carta == palpite
